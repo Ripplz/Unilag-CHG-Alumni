@@ -1,0 +1,40 @@
+{/* <h2 className="center_text">
+        Julius and Christiana
+        <br />
+        are celebrating
+        <br />
+        45 Years of Bliss
+      </h2>
+      <div id="details">
+        <div className="detail">
+          <img
+            src={calendar}
+            width="24"
+            height="24"
+            className="detail_icon"
+            alt=""
+          />
+          <span className="detail_text">Saturday 15th of June, 2019</span>
+        </div>
+        <div className="detail">
+          <img
+            src={alarm_icon}
+            width="24"
+            height="24"
+            className="detail_icon"
+            alt=""
+          />
+          <span className="detail_text">4:00 PM</span>
+        </div>
+        <div className="detail">
+          <img
+            src={location}
+            width="24"
+            height="24"
+            className="detail_icon"
+            alt=""
+          />
+          <span className="detail_text">Hilton Maidstone</span>
+        </div>
+      </div>
+      <h2 id="rsvp">RSVP</h2> */}

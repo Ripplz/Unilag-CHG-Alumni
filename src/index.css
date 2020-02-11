@@ -1,13 +1,61 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  /* background: radial-gradient(
+      circle closest-side at 60% 43%,
+      #002366 26%,
+      rgba(187, 0, 51, 0) 27%
+    ),
+    radial-gradient(
+      circle closest-side at 40% 43%,
+      #002366 26%,
+      rgba(187, 0, 51, 0) 27%
+    ),
+    radial-gradient(
+      circle closest-side at 40% 22%,
+      #014cdc 45%,
+      rgba(221, 51, 85, 0) 46%
+    ),
+    radial-gradient(
+      circle closest-side at 60% 22%,
+      #014cdc 45%,
+      rgba(221, 51, 85, 0) 46%
+    ),
+    radial-gradient(
+      circle closest-side at 50% 35%,
+      #014cdc 30%,
+      rgba(221, 51, 85, 0) 31%
+    ),
+    radial-gradient(
+        circle closest-side at 60% 43%,
+        #002366 26%,
+        rgba(187, 0, 51, 0) 27%
+      )
+      50px 50px,
+    radial-gradient(
+        circle closest-side at 40% 43%,
+        #002366 26%,
+        rgba(187, 0, 51, 0) 27%
+      )
+      50px 50px,
+    radial-gradient(
+        circle closest-side at 40% 22%,
+        #014cdc 45%,
+        rgba(221, 51, 85, 0) 46%
+      )
+      50px 50px,
+    radial-gradient(
+        circle closest-side at 60% 22%,
+        #014cdc 45%,
+        rgba(221, 51, 85, 0) 46%
+      )
+      50px 50px,
+    radial-gradient(
+        circle closest-side at 50% 35%,
+        #014cdc 30%,
+        rgba(221, 51, 85, 0) 31%
+      )
+      50px 50px; */
+  background-color: #002366;
+  background-size: 100px 100px;
+  font-family: "Quicksand", sans-serif;
+  /* min-width: 542px; */
 }
