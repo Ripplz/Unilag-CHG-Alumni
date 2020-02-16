@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import Alumnus from "./Alumnus";
+import "./Portal.css";
 
 const Portal = () => {
   const [alumni, setAlumni] = useState([]);
 
+  let fetchUrl = "https://unilag-chg-alumni-server.now.sh/alumni"
+  // let fetchUrl = "http://localhost:3005/alumni"
+
   useEffect(() => {
-    fetch("https://unilag-chg-alumni-server.now.sh/alumni", { method: "GET" })
+    fetch(fetchUrl, { method: "GET" })
       .then(response => response.json())
       .then(data => {
         if (data) setAlumni(data);
