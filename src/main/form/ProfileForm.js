@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import default_profile_pic from "../../images/default_profile_pic.png";
 import "react-toastify/dist/ReactToastify.css";
-import "./ProfileForm.css"
+import "./ProfileForm.css";
 import countries from "../../utils/countries";
 import add_icon from "../../images/add.svg";
+import question_icon from "../../images/question.svg";
+import swal from "sweetalert";
 
 const ProfileForm = () => {
   const [isDisabled, setIsDisabled] = useState(false);
@@ -28,12 +30,12 @@ const ProfileForm = () => {
     event.preventDefault();
 
     if (photo === null) {
-      toast("Please upload a profile picture");
+      toast.warn("Please upload a profile picture");
       return;
     } else if (window.confirm("Are you sure you want to submit?")) {
       const rawPhoto = await convertFileToBase64(photo);
       setIsDisabled(true);
-      var submitToastId = toast("Submitting...", { autoClose: false });
+      var submitToastId = toast.info("Submitting...", { autoClose: false });
       const newAlumnus = {
         lastName,
         otherNames,
@@ -65,7 +67,7 @@ const ProfileForm = () => {
         .then(response => response.json())
         .then(data => {
           toast.dismiss(submitToastId);
-          toast("Your data has been successfully submitted.");
+          toast.success("Your data has been successfully submitted.");
           resetForm();
           setIsDisabled(false);
         })
@@ -93,9 +95,7 @@ const ProfileForm = () => {
     setThrowbackPhotosPrivacy(true);
     setComments("");
 
-    document.getElementById(
-      "profile_picture_img_form"
-    ).src = default_profile_pic;
+    document.getElementById("img_profile_picture").src = default_profile_pic;
   };
 
   const launchProfilePicturePicker = () => {
@@ -107,7 +107,7 @@ const ProfileForm = () => {
     const files = imagePicker.files;
     if (files.length !== 0) {
       const newImage = files[0];
-      const profilePic = document.getElementById("profile_picture_img_form");
+      const profilePic = document.getElementById("img_profile_picture");
       profilePic.src = URL.createObjectURL(newImage);
       setPhoto(newImage);
     }
@@ -144,7 +144,14 @@ const ProfileForm = () => {
       reader.readAsDataURL(file);
     });
   };
-  
+
+  const showInfo = () =>
+    swal({
+      title: "About this portal",
+      text: "This portal is for the United States of Unilag. Allows you to.",
+      icon: "info",
+      button: "OK"
+    });
 
   return (
     <div className="main">
@@ -156,28 +163,30 @@ const ProfileForm = () => {
       <h5 style={{ textAlign: "center" }}>
         Please fill in the form below to record your data on the portal
       </h5>
-      <div className="profile_picture">
-        <img
-          className="profile_picture_img"
-          id="profile_picture_img_form"
-          onClick={launchProfilePicturePicker}
-          alt=""
-          src={default_profile_pic}
-        />
-        <input
-          type="file"
-          id="image_picker"
-          accept=".jpg, .jpeg, .png"
-          onChange={updateProfilePicture}
-        />
-        <h4
-          className="heading"
-          id="student_name"
-          style={{ textDecoration: "underline" }}
-          onClick={launchProfilePicturePicker}
-        >
-          Upload Profile Picture
-        </h4>
+      <div id="header">
+        <img id="img_info" src={question_icon} alt="" onClick={showInfo} />
+        <div id="wrapper_profile_picture">
+          <img
+            id="img_profile_picture"
+            onClick={launchProfilePicturePicker}
+            alt=""
+            src={default_profile_pic}
+          />
+          <input
+            type="file"
+            id="image_picker"
+            accept=".jpg, .jpeg, .png"
+            onChange={updateProfilePicture}
+          />
+          <h4
+            className="heading"
+            id="student_name"
+            style={{ textDecoration: "underline" }}
+            onClick={launchProfilePicturePicker}
+          >
+            Upload Profile Picture
+          </h4>
+        </div>
       </div>
       <form onSubmit={submit} id="form_main">
         <div className="form-group">
@@ -301,10 +310,19 @@ const ProfileForm = () => {
           <span className="half">Throwback Photos (Optional)</span>
           <span className="half">
             <label className="switch">
-              <input type="checkbox" id="throwback-photos-privacy-switch" checked={throwbackPhotosPrivacy} onChange={event => setThrowbackPhotosPrivacy(event.target.checked)} />
+              <input
+                type="checkbox"
+                id="throwback-photos-privacy-switch"
+                checked={throwbackPhotosPrivacy}
+                onChange={event =>
+                  setThrowbackPhotosPrivacy(event.target.checked)
+                }
+              />
               <span className="slider round"></span>
             </label>
-            <span id="throwback-photos-privacy-text">{throwbackPhotosPrivacy ? "Public" : "Private"}</span>
+            <span id="throwback-photos-privacy-text">
+              {throwbackPhotosPrivacy ? "Public" : "Private"}
+            </span>
           </span>
         </div>
         <div className="throwback-photos-container">

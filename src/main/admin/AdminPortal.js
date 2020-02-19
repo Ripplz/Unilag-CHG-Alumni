@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import Alumnus from "./Alumnus";
-import "./Portal.css";
+import Alumnus from "../portal/Alumnus";
+import "./AdminPortal.css";
 
-const Portal = () => {
+const AdminPortal = () => {
   const [alumni, setAlumni] = useState([]);
 
   let fetchUrl = "https://unilag-chg-alumni-server.now.sh/alumni"
@@ -29,10 +29,10 @@ const Portal = () => {
     <div className="portal_wrapper">
       {alumni &&
         alumni.map((alumnus, index) => (
-          <Alumnus key={index} alumnus={alumnus} />
+          <Alumnus key={index} alumnus={alumnus} isAdmin />
         ))}
     </div>
   );
 };
 
-export default Portal;
+export default AdminPortal;
