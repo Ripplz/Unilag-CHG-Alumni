@@ -6,8 +6,8 @@ import "./AdminPortal.css";
 const AdminPortal = () => {
   const [alumni, setAlumni] = useState([]);
 
-  let fetchUrl = "https://unilag-chg-alumni-server.now.sh/alumni"
-  // let fetchUrl = "http://localhost:3005/alumni";
+  // let fetchUrl = "https://unilag-chg-alumni-server.now.sh/alumni"
+  let fetchUrl = "http://localhost:3005/alumni";
 
   useEffect(() => {
     var submitToastId = toast.info("Loading Alumni...", { autoClose: false });
