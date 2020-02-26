@@ -55,8 +55,8 @@ const ProfileForm = () => {
       };
       console.log(newAlumnus);
       console.log(JSON.stringify(newAlumnus));
-      let fetchUrl = "https://unilag-chg-alumni-server.now.sh/add_alumnus";
-      // let fetchUrl = "http://localhost:3005/add_alumnus";
+      // let fetchUrl = "https://unilag-chg-alumni-server.now.sh/add_alumnus";
+      let fetchUrl = "http://localhost:3005/add_alumnus";
       fetch(fetchUrl, {
         body: JSON.stringify(newAlumnus),
         method: "POST",
@@ -210,27 +210,6 @@ const ProfileForm = () => {
         </div>
 
         <div className="form-group">
-          {/* <label htmlFor="graduationYear">Graduation Year</label> */}
-          <input
-            type="number"
-            name="graduationYear"
-            maxLength="4"
-            value={graduationYear}
-            onChange={event => setGraduationYear(event.target.value)}
-            required
-            placeholder="Graduation Year..."
-          />
-          <input
-            type="text"
-            name="degree"
-            value={degree}
-            onChange={event => setDegree(event.target.value)}
-            required
-            placeholder="Degree..."
-          />
-        </div>
-
-        <div className="form-group">
           {/* <label htmlFor="phone">Phone</label> */}
           <input
             type="tel"
@@ -270,7 +249,7 @@ const ProfileForm = () => {
           />
         </div>
 
-        <div className="form-group form-group-center">
+        <div className="form-group">
           {/* <label htmlFor="country">Country</label> */}
           <select
             name="country"
@@ -283,10 +262,7 @@ const ProfileForm = () => {
               <option key={key}>{value}</option>
             ))}
           </select>
-        </div>
 
-        <div className="form-group">
-          {/* <label htmlFor="street">Address</label> */}
           <input
             type="password"
             name="password"
@@ -295,6 +271,11 @@ const ProfileForm = () => {
             required
             placeholder="Password..."
           />
+        </div>
+
+        {/* <div className="form-group">
+          {/* <label htmlFor="street">Address</label> 
+          
           <input
             type="text"
             name="passwordHint"
@@ -302,9 +283,43 @@ const ProfileForm = () => {
             onChange={event => setPasswordHint(event.target.value)}
             placeholder="Password Hint (optional)"
           />
-        </div>
+        </div> */}
 
         <hr className="line" />
+
+        <div className="form-group">
+          {/* <label htmlFor="graduationYear">Graduation Year</label> */}
+          <input
+            type="number"
+            name="graduationYear"
+            maxLength="4"
+            value={graduationYear}
+            onChange={event => setGraduationYear(event.target.value)}
+            required
+            placeholder="Graduation Year..."
+          />
+
+          <select
+            name="degree"
+            value={degree}
+            onChange={event => setDegree(event.target.value)}
+            required
+            placeholder="Choose Degree..."
+          >
+            {["BSc.", "MSc.", "PhD."].map((value, key) => (
+              <option key={key}>{value}</option>
+            ))}
+          </select>
+
+          {/* <input
+            type="text"
+            name="degree"
+            value={degree}
+            onChange={event => setDegree(event.target.value)}
+            required
+            placeholder="Degree..."
+          /> */}
+        </div>
 
         <div id="throwback-container">
           <span className="half">Throwback Photos (Optional)</span>
