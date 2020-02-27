@@ -153,6 +153,8 @@ const ProfileForm = () => {
       button: "OK"
     });
 
+  const performAddDegree = () => {};
+
   return (
     <div className="main">
       <h3 style={{ textAlign: "center" }}>
@@ -287,31 +289,32 @@ const ProfileForm = () => {
 
         <hr className="line" />
 
-        <div className="form-group">
-          {/* <label htmlFor="graduationYear">Graduation Year</label> */}
-          <input
-            type="number"
-            name="graduationYear"
-            maxLength="4"
-            value={graduationYear}
-            onChange={event => setGraduationYear(event.target.value)}
-            required
-            placeholder="Graduation Year..."
-          />
+        <div className="wrapper_degree">
+          <div className="form-group">
+            {/* <label htmlFor="graduationYear">Graduation Year</label> */}
+            <select
+              name="degree"
+              value={degree}
+              onChange={event => setDegree(event.target.value)}
+              required
+              placeholder="Choose Degree..."
+            >
+              {["BSc.", "MSc.", "PhD."].map((value, key) => (
+                <option key={key}>{value}</option>
+              ))}
+            </select>
 
-          <select
-            name="degree"
-            value={degree}
-            onChange={event => setDegree(event.target.value)}
-            required
-            placeholder="Choose Degree..."
-          >
-            {["BSc.", "MSc.", "PhD."].map((value, key) => (
-              <option key={key}>{value}</option>
-            ))}
-          </select>
+            <input
+              type="number"
+              name="graduationYear"
+              maxLength="4"
+              value={graduationYear}
+              onChange={event => setGraduationYear(event.target.value)}
+              required
+              placeholder="Graduation Year..."
+            />
 
-          {/* <input
+            {/* <input
             type="text"
             name="degree"
             value={degree}
@@ -319,11 +322,41 @@ const ProfileForm = () => {
             required
             placeholder="Degree..."
           /> */}
-        </div>
+          </div>
 
-        <div id="throwback-container">
-          <span className="half">Throwback Photos (Optional)</span>
-          <span className="half">
+          <div className="throwback-photos-container">
+            <span className="title-throwback-photos">
+              Throwback Photos (Optional)
+            </span>
+            {throwbackPhotos.map((photo, index) => (
+              <div className="throwback-item" key={index}>
+                <img alt="" src={photo} className="throwback-photo" />
+              </div>
+            ))}
+            <div
+              className="throwback-item add-throwback"
+              onClick={launchThrowbackPhotoPicker}
+            >
+              <img alt="" src={add_icon} />
+            </div>
+            <input
+              type="file"
+              id="throwback_photo_picker"
+              accept=".jpg, .jpeg, .png"
+              multiple
+              onChange={addThrowbackPhoto}
+            />
+          </div>
+
+          <textarea
+            name="comments"
+            placeholder="Additional comments... (optional)"
+            value={comments}
+            className="textarea_comments"
+            onChange={event => setComments(event.target.value)}
+          />
+
+          <span>
             <label className="switch">
               <input
                 type="checkbox"
@@ -340,33 +373,10 @@ const ProfileForm = () => {
             </span>
           </span>
         </div>
-        <div className="throwback-photos-container">
-          {throwbackPhotos.map((photo, index) => (
-            <div className="throwback-item" key={index}>
-              <img alt="" src={photo} className="throwback-photo" />
-            </div>
-          ))}
-          <div
-            className="throwback-item add-throwback"
-            onClick={launchThrowbackPhotoPicker}
-          >
-            <img alt="" src={add_icon} />
-          </div>
-          <input
-            type="file"
-            id="throwback_photo_picker"
-            accept=".jpg, .jpeg, .png"
-            multiple
-            onChange={addThrowbackPhoto}
-          />
-        </div>
 
-        <textarea
-          name="comments"
-          placeholder="Additional comments... (optional)"
-          value={comments}
-          onChange={event => setComments(event.target.value)}
-        />
+        <button id="btn-add-degree" onClick={performAddDegree}>
+          Add Degree
+        </button>
 
         <button id="button" disabled={isDisabled}>
           Submit

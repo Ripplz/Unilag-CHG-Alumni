@@ -17,21 +17,21 @@
 
 @keyframes heartbeat {
   0% {
-    transform: scale( 1 );
+    transform: scale(1);
   }
 
   20% {
-    transform: scale( 1.5 );
-      /* translateX(50%) 
+    transform: scale(1.5);
+    /* translateX(50%) 
       translateY(50%); */
   }
 
   40% {
-    transform: scale( 1 );
+    transform: scale(1);
   }
 
   100% {
-    transform: scale( 1 );
+    transform: scale(1);
   }
 }
 
@@ -83,9 +83,11 @@
   margin: 8px;
 }
 
-
 .form-group {
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 8px;
 }
 
 .form-group-center {
@@ -106,12 +108,12 @@ select {
   /* display: block; */
   border: 0.5px solid lightgray;
   border-radius: 2px;
-  margin-left: 8px;
+  /* margin-left: 8px; */
   padding: 4px 0;
   text-indent: 16px;
   font-size: 1em;
   outline: none;
-  width: 45%;
+  width: 49%;
 }
 
 label {
@@ -182,16 +184,17 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-.half {
-  width: 45%;
+.wrapper_degree {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  padding: 16px 16px;
+  border-radius: 16px;
+  border: 1px dotted darkgrey;
 }
 
-#throwback-container {
-  width: 100%;
-  display: flex;
-  align-content: center;
-  margin-bottom: 8px;
-  flex-flow: row;
+.wrapper_degree .form-group {
+  padding: 0px;
 }
 
 #throwback-photos-privacy-text {
@@ -201,7 +204,23 @@ input:checked + .slider:before {
 
 .throwback-photos-container {
   display: flex;
-  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 8px;
+  flex-flow: column;
+}
+
+.title-throwback-photos {
+  margin-bottom: 8px;
+}
+
+.textarea_comments {
+  margin-bottom: 8px;
+  border: 0.5px solid lightgray;
+  border-radius: 2px;
+  padding: 4px 0;
+  text-indent: 16px;
+  font-size: 1em;
+  outline: none;
   width: 100%;
 }
 
@@ -225,15 +244,20 @@ input:checked + .slider:before {
   height: 100%;
 }
 
-textarea {
-  border: 0.5px solid lightgray;
-  border-radius: 2px;
-  padding: 4px 0;
-  text-indent: 16px;
-  font-size: 1em;
-  outline: none;
-  width: 100%;
-  margin-top: 8px;
+#btn-add-degree {
+  display: block;
+  height: 30px;
+  text-align: center;
+  background-color: darkgray;
+  border: 1px solid transparent;
+  margin: 8px 0px;
+  color: white;
+  font-size: 1.2em;
+  border-radius: 4px;
+  padding: 4px 16px;
+  align-self: flex-start;
+  box-shadow: 0 6px 10px 0 rgba(170, 48, 48, 0.14),
+    0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4);
 }
 
 #button {
