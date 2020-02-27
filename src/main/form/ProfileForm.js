@@ -26,6 +26,16 @@ const ProfileForm = () => {
   const [passwordHint, setPasswordHint] = useState("");
   const [throwbackPhotosPrivacy, setThrowbackPhotosPrivacy] = useState(true);
 
+  const [degrees, setDegrees] = useState([
+    {
+      degree: "",
+      graduationYear: "",
+      throwbackPhotos: [],
+      comments: "",
+      privacy: true
+    }
+  ]);
+
   const submit = async event => {
     event.preventDefault();
 
@@ -153,7 +163,9 @@ const ProfileForm = () => {
       button: "OK"
     });
 
-  const performAddDegree = () => {};
+  const performAddDegree = event => {
+    event.preventDefault();
+  };
 
   return (
     <div className="main">
@@ -289,90 +301,99 @@ const ProfileForm = () => {
 
         <hr className="line" />
 
-        <div className="wrapper_degree">
-          <div className="form-group">
-            {/* <label htmlFor="graduationYear">Graduation Year</label> */}
-            <select
-              name="degree"
-              value={degree}
-              onChange={event => setDegree(event.target.value)}
-              required
-              placeholder="Choose Degree..."
-            >
-              {["BSc.", "MSc.", "PhD."].map((value, key) => (
-                <option key={key}>{value}</option>
-              ))}
-            </select>
+        {degrees.map((singleDegree, index) => (
+          <div className="wrapper_degree" key={index}>
+            <div className="form-group">
+              {/* <label htmlFor="graduationYear">Graduation Year</label> */}
+              <select
+                name="degree"
+                value={singleDegree.degree}
+                onChange={event => setDegree(event.target.value, index)}
+                required
+                placeholder="Choose Degree..."
+              >
+                {["BSc.", "MSc.", "PhD."].map((value, key) => (
+                  <option key={key}>{value}</option>
+                ))}
+              </select>
 
-            <input
-              type="number"
-              name="graduationYear"
-              maxLength="4"
-              value={graduationYear}
-              onChange={event => setGraduationYear(event.target.value)}
-              required
-              placeholder="Graduation Year..."
-            />
-
-            {/* <input
-            type="text"
-            name="degree"
-            value={degree}
-            onChange={event => setDegree(event.target.value)}
-            required
-            placeholder="Degree..."
-          /> */}
-          </div>
-
-          <div className="throwback-photos-container">
-            <span className="title-throwback-photos">
-              Throwback Photos (Optional)
-            </span>
-            {throwbackPhotos.map((photo, index) => (
-              <div className="throwback-item" key={index}>
-                <img alt="" src={photo} className="throwback-photo" />
-              </div>
-            ))}
-            <div
-              className="throwback-item add-throwback"
-              onClick={launchThrowbackPhotoPicker}
-            >
-              <img alt="" src={add_icon} />
-            </div>
-            <input
-              type="file"
-              id="throwback_photo_picker"
-              accept=".jpg, .jpeg, .png"
-              multiple
-              onChange={addThrowbackPhoto}
-            />
-          </div>
-
-          <textarea
-            name="comments"
-            placeholder="Additional comments... (optional)"
-            value={comments}
-            className="textarea_comments"
-            onChange={event => setComments(event.target.value)}
-          />
-
-          <span>
-            <label className="switch">
               <input
-                type="checkbox"
-                id="throwback-photos-privacy-switch"
-                checked={throwbackPhotosPrivacy}
-                onChange={event =>
-                  setThrowbackPhotosPrivacy(event.target.checked)
-                }
+                type="number"
+                name="graduationYear"
+                maxLength="4"
+                value={singleDegree.graduationYear}
+                onChange={event => setGraduationYear(event.target.value, index)}
+                required
+                placeholder="Graduation Year..."
               />
-              <span className="slider round"></span>
-            </label>
-            <span id="throwback-photos-privacy-text">
-              {throwbackPhotosPrivacy ? "Public" : "Private"}
+
+              {/* <input
+                type="text"
+                name="degree"
+                value={degree}
+                onChange={event => setDegree(event.target.value)}
+                required
+                placeholder="Degree..."
+              /> */}
+            </div>
+
+            <div className="throwback-photos-container">
+              <span className="title-throwback-photos">
+                Throwback Photos (Optional)
+              </span>
+              {singleDegree.throwbackPhotos.map((photo, index) => (
+                <div className="throwback-item" key={index}>
+                  <img alt="" src={photo} className="throwback-photo" />
+                </div>
+              ))}
+              <div
+                className="throwback-item add-throwback"
+                onClick={() => launchThrowbackPhotoPicker(index)}
+              >
+                <img alt="" src={add_icon} />
+              </div>
+              <input
+                type="file"
+                id="throwback_photo_picker"
+                accept=".jpg, .jpeg, .png"
+                multiple
+                onChange={() => addThrowbackPhoto(index)}
+              />
+            </div>
+
+            <textarea
+              name="comments"
+              placeholder="Additional comments... (optional)"
+              value={singleDegree.comments}
+              className="textarea_comments"
+              onChange={event => setComments(event.target.value, index)}
+            />
+
+            <span>
+              <label className="switch">
+                <input
+                  type="checkbox"
+                  id="throwback-photos-privacy-switch"
+                  checked={singleDegree.throwbackPhotosPrivacy}
+                  onChange={event =>
+                    setThrowbackPhotosPrivacy(event.target.checked, index)
+                  }
+                />
+                <span className="slider round"></span>
+              </label>
+              <span
+                id="throwback-photos-privacy-text"
+                onClick={() =>
+                  setThrowbackPhotosPrivacy(
+                    !singleDegree.throwbackPhotosPrivacy
+                  )
+                }
+              >
+                {singleDegree.throwbackPhotosPrivacy ? "Public" : "Private"}
+              </span>
             </span>
-          </span>
-        </div>
+          </div>
+        ))}
 
         <button id="btn-add-degree" onClick={performAddDegree}>
           Add Degree
