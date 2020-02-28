@@ -19,7 +19,16 @@ const Alumnus = props => {
     </div>
   );
   return (
-    <div className="alumnus_wrapper">
+    <div className="wrapper_alumnus">
+      <img
+        className="img_alumnus_photo"
+        alt=""
+        src={props.alumnus.photo ? props.alumnus.photo : default_profile_pic}
+      />
+      <div className="title_alummnus_name">{`${props.alumnus.lastName} ${props.alumnus.otherNames}`}</div>
+      <div className="alumnus_degree_summary">{`${props.alumnus.degrees[0].degreeType}, ${props.alumnus.degrees[0].graduationYear}`}</div>
+    </div>
+    /*<div className="alumnus_wrapper">
       <div className="profile_picture_alumnus">
         <img
           className="profile_picture_img"
@@ -31,13 +40,6 @@ const Alumnus = props => {
       <div className="details">
         {isAdmin && (
           <div className="detail">
-            {/* <img
-              src={phone}
-              width="24"
-              height="24"
-              className="detail_icon"
-              alt=""
-            /> */}
             <span className="detail_text">Phone:</span>
             <span className="detail_text_two">{props.alumnus.phone}</span>
           </div>
@@ -86,7 +88,7 @@ const Alumnus = props => {
       </button>
       </div>}
       
-    </div>
+    </div> */
   );
 };
 

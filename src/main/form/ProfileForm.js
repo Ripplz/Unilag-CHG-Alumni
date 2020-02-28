@@ -12,26 +12,22 @@ const ProfileForm = () => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [lastName, setLastName] = useState("");
   const [otherNames, setOtherNames] = useState("");
-  const [graduationYear, setGraduationYear] = useState("");
-  const [degree, setDegree] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [town, setTown] = useState("");
   const [country, setCountry] = useState("Nigeria");
   const [photo, setPhoto] = useState(null);
-  const [throwbackPhotos, setThrowbackPhotos] = useState([]);
-  const [comments, setComments] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordHint, setPasswordHint] = useState("");
-  const [throwbackPhotosPrivacy, setThrowbackPhotosPrivacy] = useState(true);
+
+  const initialDegreeSelections = ["BSc.", "MSc.", "PhD."];
 
   const [degrees, setDegrees] = useState([
     {
-      degree: "",
+      degreeType: initialDegreeSelections[0],
       graduationYear: "",
       throwbackPhotos: [],
-      comments: "",
+      comment: "",
       privacy: true
     }
   ]);
@@ -49,22 +45,17 @@ const ProfileForm = () => {
       const newAlumnus = {
         lastName,
         otherNames,
-        graduationYear,
-        degree,
         phone,
         email,
         address,
         town,
         country,
         password,
-        passwordHint,
         photo: rawPhoto,
-        throwbackPhotos,
-        throwbackPhotosPrivacy,
-        comments
+        degrees
       };
       console.log(newAlumnus);
-      console.log(JSON.stringify(newAlumnus));
+      // console.log(JSON.stringify(newAlumnus));
       // let fetchUrl = "https://unilag-chg-alumni-server.now.sh/add_alumnus";
       let fetchUrl = "http://localhost:3005/add_alumnus";
       fetch(fetchUrl, {
@@ -91,19 +82,22 @@ const ProfileForm = () => {
   const resetForm = () => {
     setLastName("");
     setOtherNames("");
-    setGraduationYear("");
-    setDegree("");
     setPhone("");
     setEmail("");
     setAddress("");
     setTown("");
     setCountry("Nigeria");
     setPassword("");
-    setPasswordHint("");
     setPhoto(null);
-    setThrowbackPhotos([]);
-    setThrowbackPhotosPrivacy(true);
-    setComments("");
+    setDegrees([
+      {
+        degreeType: initialDegreeSelections[0],
+        graduationYear: "",
+        throwbackPhotos: [],
+        comment: "",
+        privacy: true
+      }
+    ]);
 
     document.getElementById("img_profile_picture").src = default_profile_pic;
   };
@@ -123,21 +117,27 @@ const ProfileForm = () => {
     }
   };
 
-  const launchThrowbackPhotoPicker = () => {
-    document.getElementById("throwback_photo_picker").click();
+  const launchThrowbackPhotoPicker = index => {
+    document.getElementsByClassName("throwback_photo_picker")[index].click();
   };
 
-  const addThrowbackPhoto = async () => {
-    const imagePicker = document.getElementById("throwback_photo_picker");
+  const addThrowbackPhoto = async index => {
+    const allDegrees = [...degrees];
+    const degree = allDegrees[index];
+    const imagePicker = document.getElementsByClassName(
+      "throwback_photo_picker"
+    )[index];
     const files = imagePicker.files;
     if (files.length !== 0) {
-      let allThrowbacks = [...throwbackPhotos];
+      let allThrowbacks = [...degree.throwbackPhotos];
       for (let i = 0; i < files.length; i++) {
         const file = files.item(i);
         const convertedFile = await convertFileToBase64(file);
         allThrowbacks.push(convertedFile);
       }
-      setThrowbackPhotos(allThrowbacks);
+      degree.throwbackPhotos = allThrowbacks;
+      allDegrees[index] = degree;
+      setDegrees(allDegrees);
     }
   };
 
@@ -165,6 +165,50 @@ const ProfileForm = () => {
 
   const performAddDegree = event => {
     event.preventDefault();
+    const newIndex = degrees.length;
+
+    const allDegrees = [...degrees];
+
+    allDegrees[newIndex] = {
+      degreeType: initialDegreeSelections[0],
+      graduationYear: "",
+      throwbackPhotos: [],
+      comment: "",
+      privacy: true
+    };
+    setDegrees(allDegrees);
+  };
+
+  const performRemoveDegree = (event, index) => {
+    event.preventDefault();
+    if (degrees.length <= 1) return;
+    const allDegrees = [...degrees];
+    allDegrees.splice(index, 1);
+    setDegrees(allDegrees);
+  };
+
+  const setDegreeType = (newDegreeType, index) => {
+    const allDegrees = [...degrees];
+    allDegrees[index].degreeType = newDegreeType;
+    setDegrees(allDegrees);
+  };
+
+  const setDegreeGraduationYear = (newGraduationYear, index) => {
+    const allDegrees = [...degrees];
+    allDegrees[index].graduationYear = newGraduationYear;
+    setDegrees(allDegrees);
+  };
+
+  const setDegreeComment = (newComment, index) => {
+    const allDegrees = [...degrees];
+    allDegrees[index].comment = newComment;
+    setDegrees(allDegrees);
+  };
+
+  const setDegreePrivacy = (newPrivacy, index) => {
+    const allDegrees = [...degrees];
+    allDegrees[index].privacy = newPrivacy;
+    setDegrees(allDegrees);
   };
 
   return (
@@ -272,9 +316,8 @@ const ProfileForm = () => {
             required
             placeholder="Choose..."
           >
-            {countries.map((value, key) => (
-              <option key={key}>{value}</option>
-            ))}
+            {countries &&
+              countries.map((value, key) => <option key={key}>{value}</option>)}
           </select>
 
           <input
@@ -287,113 +330,106 @@ const ProfileForm = () => {
           />
         </div>
 
-        {/* <div className="form-group">
-          {/* <label htmlFor="street">Address</label> 
-          
-          <input
-            type="text"
-            name="passwordHint"
-            value={passwordHint}
-            onChange={event => setPasswordHint(event.target.value)}
-            placeholder="Password Hint (optional)"
-          />
-        </div> */}
-
         <hr className="line" />
 
-        {degrees.map((singleDegree, index) => (
-          <div className="wrapper_degree" key={index}>
-            <div className="form-group">
-              {/* <label htmlFor="graduationYear">Graduation Year</label> */}
-              <select
-                name="degree"
-                value={singleDegree.degree}
-                onChange={event => setDegree(event.target.value, index)}
-                required
-                placeholder="Choose Degree..."
-              >
-                {["BSc.", "MSc.", "PhD."].map((value, key) => (
-                  <option key={key}>{value}</option>
-                ))}
-              </select>
+        {degrees &&
+          degrees.map((singleDegree, index) => (
+            <div className="wrapper_degree" key={index}>
+              <div className="form-group">
+                {/* <label htmlFor="graduationYear">Graduation Year</label> */}
+                <select
+                  name="degree"
+                  value={singleDegree.degreeType}
+                  onChange={event => setDegreeType(event.target.value, index)}
+                  required
+                  placeholder="Choose Degree..."
+                >
+                  {initialDegreeSelections &&
+                    initialDegreeSelections.map((value, key) => (
+                      <option key={key}>{value}</option>
+                    ))}
+                </select>
 
-              <input
-                type="number"
-                name="graduationYear"
-                maxLength="4"
-                value={singleDegree.graduationYear}
-                onChange={event => setGraduationYear(event.target.value, index)}
-                required
-                placeholder="Graduation Year..."
-              />
+                <input
+                  type="number"
+                  name="graduationYear"
+                  maxLength="4"
+                  value={singleDegree.graduationYear}
+                  onChange={event =>
+                    setDegreeGraduationYear(event.target.value, index)
+                  }
+                  required
+                  placeholder="Graduation Year..."
+                />
+              </div>
 
-              {/* <input
-                type="text"
-                name="degree"
-                value={degree}
-                onChange={event => setDegree(event.target.value)}
-                required
-                placeholder="Degree..."
-              /> */}
-            </div>
-
-            <div className="throwback-photos-container">
               <span className="title-throwback-photos">
                 Throwback Photos (Optional)
               </span>
-              {singleDegree.throwbackPhotos.map((photo, index) => (
-                <div className="throwback-item" key={index}>
-                  <img alt="" src={photo} className="throwback-photo" />
+              <div className="throwback-photos-container">
+                {singleDegree.throwbackPhotos &&
+                  singleDegree.throwbackPhotos.map((photo, index) => (
+                    <div className="throwback-item" key={index}>
+                      <img alt="" src={photo} className="throwback-photo" />
+                    </div>
+                  ))}
+                <div
+                  className="throwback-item add-throwback"
+                  onClick={() => launchThrowbackPhotoPicker(index)}
+                >
+                  <img alt="" src={add_icon} />
                 </div>
-              ))}
-              <div
-                className="throwback-item add-throwback"
-                onClick={() => launchThrowbackPhotoPicker(index)}
-              >
-                <img alt="" src={add_icon} />
-              </div>
-              <input
-                type="file"
-                id="throwback_photo_picker"
-                accept=".jpg, .jpeg, .png"
-                multiple
-                onChange={() => addThrowbackPhoto(index)}
-              />
-            </div>
-
-            <textarea
-              name="comments"
-              placeholder="Additional comments... (optional)"
-              value={singleDegree.comments}
-              className="textarea_comments"
-              onChange={event => setComments(event.target.value, index)}
-            />
-
-            <span>
-              <label className="switch">
                 <input
-                  type="checkbox"
-                  id="throwback-photos-privacy-switch"
-                  checked={singleDegree.throwbackPhotosPrivacy}
-                  onChange={event =>
-                    setThrowbackPhotosPrivacy(event.target.checked, index)
-                  }
+                  type="file"
+                  className="throwback_photo_picker"
+                  accept=".jpg, .jpeg, .png"
+                  multiple
+                  onChange={() => addThrowbackPhoto(index)}
                 />
-                <span className="slider round"></span>
-              </label>
-              <span
-                id="throwback-photos-privacy-text"
-                onClick={() =>
-                  setThrowbackPhotosPrivacy(
-                    !singleDegree.throwbackPhotosPrivacy
-                  )
-                }
-              >
-                {singleDegree.throwbackPhotosPrivacy ? "Public" : "Private"}
-              </span>
-            </span>
-          </div>
-        ))}
+              </div>
+
+              <textarea
+                name="comment"
+                placeholder="Additional comments... (optional)"
+                value={singleDegree.comment}
+                className="textarea_comments"
+                onChange={event => setDegreeComment(event.target.value, index)}
+              />
+
+              <div className="wrapper-degree-footer">
+                <span>
+                  <label className="switch">
+                    <input
+                      type="checkbox"
+                      className="throwback-photos-privacy-switch"
+                      checked={singleDegree.privacy}
+                      onChange={event =>
+                        setDegreePrivacy(event.target.checked, index)
+                      }
+                    />
+                    <span className="slider round"></span>
+                  </label>
+                  <span
+                    className="throwback-photos-privacy-text"
+                    onClick={() =>
+                      setDegreePrivacy(!singleDegree.privacy, index)
+                    }
+                  >
+                    {singleDegree.privacy ? "Public" : "Private"}
+                  </span>
+                </span>
+
+                {index > 0 && (
+                  <button
+                    className="btn-remove-degree"
+                    onClick={event => performRemoveDegree(event, index)}
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
 
         <button id="btn-add-degree" onClick={performAddDegree}>
           Add Degree

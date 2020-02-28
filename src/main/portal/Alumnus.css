@@ -137,3 +137,46 @@
   box-shadow: 0 6px 10px 0 rgba(170, 48, 48, 0.14),
     0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4);
 }
+
+.wrapper_alumnus {
+  display: flex;
+  flex-flow: column;
+  margin: 16px;
+  background-color: white;
+  border-radius: 25px;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12),
+    0 3px 5px -1px rgba(0, 0, 0, 0.4);
+  align-items: center;
+  align-content: center;
+  padding: 16px 32px;
+  cursor: pointer;
+}
+
+.wrapper_alumnus:hover {
+  background-color: #eeeded;
+  border: 0.5px solid black;
+}
+
+.alumnus_name {
+  font-size: 150%;
+}
+
+.img_alumnus_photo {
+  height: 150px;
+  width: 150px;
+  margin-bottom: 8px;
+  border-radius: 50%;
+  box-shadow: 2px 8px 20px #00000040;
+}
+
+.title_alummnus_name {
+  font-size: 18px;
+  line-height: 24px;
+  color: blue;
+  margin-bottom: 8px;
+}
+
+.alumnus_degree_summary {
+  font-size: 16px;
+  line-height: 20px;
+}

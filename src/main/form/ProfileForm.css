@@ -72,6 +72,7 @@
   height: 100px;
   width: 100px;
   margin-bottom: 62px;
+  cursor: pointer;
 }
 
 #img_profile_picture {
@@ -187,13 +188,14 @@ input:checked + .slider:before {
   padding: 16px 16px;
   border-radius: 16px;
   border: 1px dotted darkgrey;
+  margin-bottom: 8px;
 }
 
 .wrapper_degree .form-group {
   padding: 0px;
 }
 
-#throwback-photos-privacy-text {
+.throwback-photos-privacy-text {
   margin-left: 8px;
   font-size: 105%;
   cursor: pointer;
@@ -203,7 +205,7 @@ input:checked + .slider:before {
   display: flex;
   width: 100%;
   margin-bottom: 8px;
-  flex-flow: column;
+  flex-wrap: wrap;
 }
 
 .title-throwback-photos {
@@ -242,13 +244,18 @@ input:checked + .slider:before {
   height: 100%;
 }
 
+.wrapper-degree-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
 #btn-add-degree {
   display: block;
   height: 30px;
   text-align: center;
   background-color: darkgray;
   border: 1px solid transparent;
-  margin: 8px 0px;
+  margin: 0px 0px 8px;
   color: white;
   font-size: 1.2em;
   border-radius: 4px;
@@ -256,6 +263,20 @@ input:checked + .slider:before {
   align-self: flex-start;
   box-shadow: 0 6px 10px 0 rgba(170, 48, 48, 0.14),
     0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4);
+}
+
+.btn-remove-degree {
+  height: 30px;
+  text-align: center;
+  background-color: #fd2c2c;
+  border: 1px solid transparent;
+  margin: 0px 0px 8px;
+  color: white;
+  font-size: 1.2em;
+  border-radius: 4px;
+  padding: 4px 16px;
+  align-self: flex-start;
+  box-shadow: 0 6px 10px 0 rgba(170, 48, 48, 0.14);
 }
 
 #button {
