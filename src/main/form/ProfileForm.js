@@ -56,8 +56,8 @@ const ProfileForm = () => {
       };
       console.log(newAlumnus);
       // console.log(JSON.stringify(newAlumnus));
-      // let fetchUrl = "https://unilag-chg-alumni-server.now.sh/add_alumnus";
-      let fetchUrl = "http://localhost:3005/add_alumnus";
+      let fetchUrl = "https://unilag-chg-alumni-server.now.sh/add_alumnus";
+      // let fetchUrl = "http://localhost:3005/add_alumnus";
       fetch(fetchUrl, {
         body: JSON.stringify(newAlumnus),
         method: "POST",

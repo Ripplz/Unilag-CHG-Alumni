@@ -14,8 +14,8 @@ const AccountPage = () => {
   const login = event => {
     event.preventDefault();
     var submitToastId = toast.info("Submitting...", { autoClose: false });
-    // let fetchUrl = `https://unilag-chg-alumni-server.now.sh/get_alumnus?email=${email}&password=${password}`;
-    let fetchUrl = `http://localhost:3005/get_alumnus?email=${email}&password=${password}`;
+    let fetchUrl = `https://unilag-chg-alumni-server.now.sh/get_alumnus?email=${email}&password=${password}`;
+    // let fetchUrl = `http://localhost:3005/get_alumnus?email=${email}&password=${password}`;
 
     fetch(fetchUrl, { method: "GET" })
       .then(response => response.json())
